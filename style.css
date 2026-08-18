@@ -1,0 +1,853 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&display=swap');
+
+
+/* ------------------------------
+   RESET
+------------------------------ */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    position: relative;
+
+    background-color: #111111;
+    color: #f5f5f5;
+
+    font-family: "DM Sans", Arial, sans-serif;
+
+    overflow-x: hidden;
+}
+
+
+/* ------------------------------
+   NAVIGATION
+------------------------------ */
+
+.navbar {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 70px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0 40px;
+
+    background-color: rgba(17, 17, 17, 0.95);
+  
+
+    z-index: 100;
+
+    animation: navDown 1s ease forwards;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+
+    text-decoration: none;
+}
+
+.logo img {
+    display: block;
+
+    width: 250px;
+    height: auto;
+
+    object-fit: contain;
+}
+
+nav {
+    display: flex;
+    gap: 30px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+
+    font-size: 14px;
+
+    transition: opacity 0.3s ease;
+}
+
+nav a:hover {
+    opacity: 0.5;
+}
+
+
+/* ------------------------------
+   HERO
+------------------------------ */
+
+.hero {
+    position: relative;
+
+    min-height: 100vh;
+
+    padding: 40px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    overflow: hidden;
+}
+
+.hero h1 {
+    font-size: clamp(75px, 12vw, 190px);
+
+    line-height: 0.9;
+
+    font-weight: 500;
+
+    letter-spacing: -0.075em;
+
+    color: white;
+}
+
+.hero h1 span {
+    color: #5d6d55;
+}
+
+.hero-background {
+    position: absolute;
+
+    inset: 0;
+
+    background-image: url("_DSC4237.JPG");
+
+    background-size: cover;
+    background-position: center;
+
+    transform: scale(1.05);
+
+    animation: heroImage 2s ease forwards;
+
+    z-index: 0;
+}
+
+.hero-overlay {
+    position: absolute;
+
+    inset: 0;
+
+    background: rgba(0, 0, 0, 0.55);
+
+    z-index: 1;
+}
+
+.hero-top,
+.hero-content,
+.scroll {
+    position: relative;
+
+    z-index: 2;
+}
+
+.hero-top {
+    display: flex;
+
+    justify-content: space-between;
+}
+
+.hero-content {
+    max-width: 1100px;
+
+    padding-bottom: 0px;
+
+    animation:
+        heroUp 1.2s cubic-bezier(0.22, 1, 0.36, 1)
+        forwards;
+}
+
+.hero-description {
+    max-width: 400px;
+
+    margin-top: 45px;
+    margin-left: 8px;
+
+    font-size: 16px;
+
+    line-height: 1.5;
+
+    color: #dddddd;
+}
+
+.scroll {
+    display: flex;
+
+    justify-content: space-between;
+
+    font-size: 12px;
+
+    letter-spacing: 0.1em;
+
+    animation: fadeIn 1.5s ease forwards;
+}
+
+
+/* ------------------------------
+   HERO ANIMATIONS
+------------------------------ */
+
+@keyframes heroImage {
+
+    from {
+        transform: scale(1.15);
+
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1.05);
+
+        opacity: 0.7;
+    }
+
+}
+
+@keyframes heroUp {
+
+    from {
+        opacity: 0;
+
+        transform: translateY(80px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform: translateY(0);
+    }
+
+}
+
+@keyframes fadeIn {
+
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+
+}
+
+@keyframes navDown {
+
+    from {
+        opacity: 0;
+
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform: translateY(0);
+    }
+
+}
+
+
+/* ------------------------------
+   WORK
+------------------------------ */
+
+.work {
+    padding: 40px 40px;
+}
+
+.section-heading {
+    margin-bottom: 0px;
+}
+
+.section-heading > p,
+.about > p,
+.contact > p {
+    font-size: 12px;
+
+    letter-spacing: 1px;
+
+    margin-bottom: 30px;
+}
+
+.section-heading h2 {
+    font-size: clamp(50px, 8vw, 120px);
+
+    line-height: 0.9;
+
+    letter-spacing: -4px;
+}
+
+/* ------------------------------
+   WORK HEADING
+------------------------------ */
+
+.work-heading {
+    position: relative;
+
+    height: 70vh;
+    min-height: 550px;
+
+    display: flex;
+    align-items: center;
+
+    overflow: hidden;
+
+    margin-bottom: 40px;
+
+    padding: 80px 40px;
+}
+
+
+/* ------------------------------
+   MOVING IMAGE
+------------------------------ */
+
+.work-background {
+    position: absolute;
+
+    width: 300px;
+    height: 240px;
+
+    top: 50%;
+    left: 0;
+
+    background-image: url("arrowsslider.png");
+
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    opacity: 0;
+
+    z-index: 0;
+
+    pointer-events: none;
+
+    transform: translate3d(-100vw, -50%, 0);
+}
+
+
+/* ------------------------------
+   HEADING
+------------------------------ */
+
+.work-heading .section-heading {
+    position: relative;
+
+    z-index: 2;
+
+    margin: 0;
+
+    max-width: 1200px;
+}
+
+.work-heading h2 {
+    font-size: clamp(60px, 10vw, 150px);
+
+    line-height: 0.85;
+
+    letter-spacing: -0.06em;
+}
+
+.work-heading h2 span {
+    color: #5d6d55;
+}
+
+
+/* ------------------------------
+   PROJECT GRID
+------------------------------ */
+
+.project-grid {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 60px 25px;
+
+    max-width: 1600px;
+
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.project {
+    position: relative;
+
+    overflow: hidden;
+
+    transition:
+        transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.project:hover {
+    transform: translateY(-10px);
+}
+
+
+/* ------------------------------
+   PROJECT IMAGES
+------------------------------ */
+
+.project-image {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+
+    aspect-ratio: 1 / 1;
+
+    position: relative;
+
+    background-size: cover;
+
+    background-position: center;
+
+    overflow: hidden;
+
+    /*
+       Initial state for scroll reveal
+    */
+
+   opacity: 0;
+
+    transform:
+        translateY(60px)
+        scale(1.02);
+
+    transition:
+        opacity 2.5s ease,
+        transform 2.5s cubic-bezier(0.22, 1, 0.36, 1),
+        filter 0.8s ease;
+}
+
+
+/*
+   When JavaScript adds .visible,
+   the image moves into place.
+*/
+
+.project-image.visible {
+    opacity: 1;
+
+    transform:
+        translate(
+            var(--scroll-x, 0px),
+            var(--scroll-y, 0px)
+        )
+        rotate(var(--scroll-rotate, 0deg))
+        scale(var(--scroll-scale, 1));
+}
+/* ------------------------------
+   PROJECT STAGGER
+------------------------------ */
+
+.project:nth-child(1) .project-image {
+    transition-delay: 0s;
+}
+
+.project:nth-child(2) .project-image {
+    transition-delay: 0.15s;
+}
+
+.project:nth-child(3) .project-image {
+    transition-delay: 0.3s;
+}
+
+.project:nth-child(4) .project-image {
+    transition-delay: 0.45s;
+}
+
+.project:nth-child(5) .project-image {
+    transition-delay: 0.6s;
+}
+
+.project:nth-child(6) .project-image {
+    transition-delay: 0.75s;
+}
+
+/* ------------------------------
+   TEXT SCROLL REVEAL
+------------------------------ */
+
+.section-heading,
+.about{
+    opacity: 0;
+
+    transform: translateY(60px);
+
+    transition:
+        opacity 1.8s ease,
+        transform 1.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+
+.section-heading.visible,
+.about.visible {
+    opacity: 1;
+
+    transform: translateY(0);
+}
+
+/* ------------------------------
+   PROJECT IMAGES
+------------------------------ */
+
+.project-one {
+    background-image: url("_DSC4237.JPG");
+
+    background-position: 25% center;
+}
+
+.project-two {
+    background-image: url("_DSC4274.JPG");
+
+    background-position: 40% center;
+}
+
+.project-three {
+    background-image: url("_DSC4248.JPG");
+
+    background-position: center 90%;
+}
+
+.project-four {
+    background-image: url("_DSC4253.JPG");
+}
+
+.project-five {
+    background-image: url("_DSC4283.JPG");
+
+    background-position: 40% center;
+}
+
+.project-six {
+    background-image: url("_DSC4312.JPG");
+}
+
+
+/* ------------------------------
+   PROJECT HOVER
+------------------------------ */
+
+.project-image {
+    transition:
+        opacity 2.5s ease,
+        transform 2.5s cubic-bezier(0.22, 1, 0.36, 1),
+        filter 0.8s ease;
+}
+
+.project:hover .project-image.visible {
+    transform:
+        translate(
+            calc(
+                var(--move-x, 0px) +
+                var(--scroll-x, 0px)
+            ),
+            calc(
+                var(--move-y, 0px) +
+                var(--scroll-y, 0px)
+            )
+        )
+        rotate(var(--scroll-rotate, 0deg))
+        scale(
+            calc(
+                var(--scroll-scale, 1) * 1.03
+            )
+        );
+}
+
+
+/* ------------------------------
+   PROJECT INFO
+------------------------------ */
+
+.project-info {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: baseline;
+
+    padding-top: 18px;
+}
+
+.project-info h3 {
+    font-size: 18px;
+
+    font-weight: 400;
+
+    letter-spacing: -0.02em;
+
+    transition:
+        transform 0.5s ease;
+}
+
+.project:hover .project-info h3 {
+    transform: translateX(10px);
+}
+
+.project-info p {
+    font-size: 11px;
+
+    color: #777777;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.08em;
+}
+
+
+/* ------------------------------
+   ABOUT
+------------------------------ */
+
+.about {
+    padding: 100px 40px;
+
+    border-top: 1px solid #333333;
+}
+
+.about h2 {
+    max-width: 1200px;
+
+    font-size: clamp(55px, 9vw, 140px);
+
+    line-height: 0.9;
+
+    letter-spacing: -5px;
+}
+
+.about h2 span {
+    color: #5d6d55;
+}
+
+.about-text {
+    max-width: 700px;
+
+    margin-top: 100px;
+    margin-left: auto;
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 40px;
+
+    font-size: 18px;
+
+    line-height: 1.5;
+}
+
+/* ------------------------------
+   CONTACT
+------------------------------ */
+
+.contact {
+    min-height: 70vh;
+
+    padding: 140px 40px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    border-top: 1px solid #333333;
+}
+.contact h2 {
+    max-width: 1000px;
+
+    font-size: clamp(60px, 10vw, 150px);
+
+    line-height: 0.95;
+
+    letter-spacing: -5px;
+}
+
+.contact h2 span {
+    color: #5d6d55;
+}
+
+.contact-link {
+    color: white;
+
+    font-size: 20px;
+
+    margin-top: 70px;
+
+    text-decoration: none;
+
+    border-bottom: 1px solid white;
+
+    width: fit-content;
+
+    padding-bottom: 8px;
+
+    transition:
+        opacity 0.3s ease,
+        padding-left 0.4s ease;
+}
+
+.contact-link:hover {
+    opacity: 0.6;
+
+    padding-left: 15px;
+}
+
+
+/* ------------------------------
+   FOOTER
+------------------------------ */
+
+footer {
+    border-top: 1px solid #333333;
+
+    padding: 30px 40px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    color: #777777;
+
+    font-size: 12px;
+}
+
+
+/* ------------------------------
+   MOBILE
+------------------------------ */
+
+@media (max-width: 700px) {
+
+    .navbar {
+        padding: 20px;
+    }
+
+    nav {
+        gap: 15px;
+    }
+
+    .hero {
+        padding: 25px 20px;
+    }
+
+    .hero h1 {
+        font-size: clamp(60px, 18vw, 100px);
+
+        letter-spacing: -0.06em;
+    }
+
+    .hero-description {
+        max-width: 300px;
+
+        margin-left: 0;
+
+        font-size: 14px;
+    }
+
+    .hero-background {
+        background-position: center;
+    }
+
+    .work,
+    .about,
+    .contact {
+        padding: 120px 20px;
+    }
+
+    .project-grid {
+        grid-template-columns: 1fr;
+
+        gap: 70px;
+    }
+
+    .about-text {
+        grid-template-columns: 1fr;
+
+        margin-top: 60px;
+    }
+
+    footer {
+        padding: 25px 20px;
+
+        flex-direction: column;
+
+        gap: 10px;
+    }
+
+    body {
+        overflow-x: hidden;
+    }
+
+    ::selection {
+        background: white;
+
+        color: #212121;
+    }
+
+}
+
+/* ------------------------------
+   CONTACT SCROLL REVEAL
+------------------------------ */
+
+.contact {
+    opacity: 0;
+
+    transform: translateY(80px);
+
+    transition:
+        opacity 2s ease,
+        transform 2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.contact.visible {
+    opacity: 1;
+
+    transform: translateY(0);
+}
+/* ------------------------------
+   GLOBAL BLUEPRINT BACKGROUND
+------------------------------ */
+
+.blueprint-background {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    min-height: 100%;
+
+    background-image: url("blueprintlayer.png");
+
+    background-repeat: no-repeat;
+    background-position: top center;
+    background-size: 100% 100%;
+
+    opacity: 0.05;
+
+    pointer-events: none;
+
+    z-index: 0;
+}
