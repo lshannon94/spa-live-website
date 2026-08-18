@@ -1,10 +1,17 @@
+/* =========================================================
+   SPA LIVE — MAIN SCRIPT
+   ========================================================= */
+
+
+/* =========================================================
+   SCROLL REVEALS
+   ========================================================= */
+
 const revealElements = document.querySelectorAll(
-    ".section-heading, .project-image, .about, .contact .work-background"
+    ".section-heading, .project-image, .about"
 );
 
-console.log("Reveal elements:", revealElements);
-
-const observer = new IntersectionObserver(
+const revealObserver = new IntersectionObserver(
     (entries) => {
 
         entries.forEach((entry) => {
@@ -13,7 +20,7 @@ const observer = new IntersectionObserver(
 
                 entry.target.classList.add("visible");
 
-                observer.unobserve(entry.target);
+                revealObserver.unobserve(entry.target);
 
             }
 
@@ -25,193 +32,14 @@ const observer = new IntersectionObserver(
     }
 );
 
-
 revealElements.forEach((element) => {
-
-    observer.observe(element);
-
+    revealObserver.observe(element);
 });
 
 
-/* ------------------------------
-   PROJECT PARALLAX
------------------------------- */
-
-const projects = document.querySelectorAll(".project");
-
-
-projects.forEach((project) => {
-
-    const image = project.querySelector(".project-image");
-
-
-    project.addEventListener("mousemove", (event) => {
-
-        if (!image.classList.contains("visible")) {
-            return;
-        }
-
-        const rect = project.getBoundingClientRect();
-
-        const x = event.clientX - rect.left;
-        const y = event.clientY - rect.top;
-
-        const moveX = (x / rect.width - 0.5) * 12;
-        const moveY = (y / rect.height - 0.5) * 12;
-
-        image.style.setProperty(
-            "--move-x",
-            `${moveX}px`
-        );
-
-        image.style.setProperty(
-            "--move-y",
-            `${moveY}px`
-        );
-
-    });
-
-
-    project.addEventListener("mouseleave", () => {
-
-        image.style.setProperty(
-            "--move-x",
-            "0px"
-        );
-
-        image.style.setProperty(
-            "--move-y",
-            "0px"
-        );
-
-    });
-
-});
-
-/* ------------------------------
-   WORK IMAGE SCROLL ANIMATION
------------------------------- */
-
-const workHeading = document.querySelector(".work-heading");
-const workBackground = document.querySelector(".work-background");
-
-
-function updateWorkImage() {
-
-    if (!workHeading || !workBackground) {
-        return;
-    }
-
-
-    const rect = workHeading.getBoundingClientRect();
-
-    const viewportHeight = window.innerHeight;
-
-
-    /*
-       Progress through the heading.
-
-       0 = heading is entering
-       1 = heading has almost passed
-    */
-
-    let progress =
-        (viewportHeight - rect.top) /
-        (viewportHeight * 0.95);
-
-
-    progress = Math.max(0, Math.min(1, progress));
-
-
-    /*
-       Smooth the movement.
-
-       This makes the image accelerate
-       gently rather than moving linearly.
-    */
-
-    const eased =
-        progress * progress * (3 - 2 * progress);
-
-
-    /*
-       IMAGE POSITION
-
-       Starts far left
-       Ends on the right
-    */
-
-    const startX = -window.innerWidth * 0.75;
-
-    const endX = window.innerWidth * 0.35;
-
-
-    const x =
-        startX +
-        (endX - startX) * eased;
-
-
-    /*
-       Slight scale change
-    */
-
-    const scale =
-        0.85 +
-        (0.15 * eased);
-
-
-    /*
-       Fade in
-    */
-
-    let opacity;
-
-    if (progress < 0.15) {
-
-        opacity =
-            (progress / 0.15) * 0.45;
-
-    } else {
-
-        opacity = 0.45;
-
-    }
-
-
-    /*
-       Apply movement
-    */
-
-   const rotation = -90 + (180 * eased);
-
-workBackground.style.transform =
-    `translate3d(${x}px, -50%, 0) 
-     scale(${scale}) 
-     rotate(${rotation}deg)`;
-
-    workBackground.style.opacity = opacity;
-
-}
-
-
-window.addEventListener(
-    "scroll",
-    updateWorkImage,
-    { passive: true }
-);
-
-
-window.addEventListener(
-    "resize",
-    updateWorkImage
-);
-
-
-updateWorkImage();
-
-/* ------------------------------
+/* =========================================================
    CONTACT REVEAL
------------------------------- */
+   ========================================================= */
 
 const contactSection = document.querySelector(".contact");
 
@@ -234,54 +62,308 @@ if (contactSection) {
 
         },
         {
-            threshold: 0.1
+            threshold: 0.10
         }
     );
 
     contactObserver.observe(contactSection);
 }
 
-/* ------------------------------
-   RANDOM PROJECT SCROLL MOTION
------------------------------- */
 
-const projectImages = document.querySelectorAll(".project-image");
+/* =========================================================
+   PROJECT MOUSE PARALLAX
+   ========================================================= */
+
+const projects = document.querySelectorAll(".project");
+
+const hasFinePointer = window.matchMedia(
+    "(pointer: fine)"
+).matches;
+
+
+if (hasFinePointer) {
+
+    projects.forEach((project) => {
+
+        const image = project.querySelector(".project-image");
+
+        if (!image) {
+            return;
+        }
+
+        project.addEventListener("mousemove", (event) => {
+
+            if (!image.classList.contains("visible")) {
+                return;
+            }
+
+            const rect = project.getBoundingClientRect();
+
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+
+            const moveX =
+                (x / rect.width - 0.5) * 12;
+
+            const moveY =
+                (y / rect.height - 0.5) * 12;
+
+            image.style.setProperty(
+                "--move-x",
+                `${moveX}px`
+            );
+
+            image.style.setProperty(
+                "--move-y",
+                `${moveY}px`
+            );
+
+        });
+
+
+        project.addEventListener("mouseleave", () => {
+
+            image.style.setProperty(
+                "--move-x",
+                "0px"
+            );
+
+            image.style.setProperty(
+                "--move-y",
+                "0px"
+            );
+
+        });
+
+    });
+
+}
+
+
+/* =========================================================
+   PROJECT RANDOM SCROLL MOTION
+   ========================================================= */
+
+const projectImages = document.querySelectorAll(
+    ".project-image"
+);
 
 const projectMotion = [];
 
 
-/* Generate a different movement
-   pattern for every image */
+/*
+   Give every project image its own
+   subtle travelling movement.
+
+   Values are now balanced around zero,
+   meaning images can travel in either
+   direction.
+*/
 
 projectImages.forEach((image) => {
 
     projectMotion.push({
 
-        x: (Math.random() - 0.1) * 6,
+        x:
+            (Math.random() - 0.5) * 12,
 
-        y: (Math.random() - 0.1) * 8,
+        y:
+            (Math.random() - 0.5) * 16,
 
-        rotate: (Math.random() - 0.1) * 1,
+        rotate:
+            (Math.random() - 0.5) * 2,
 
-        scale: 1 + (Math.random() - 0.3) * 0.04
+        scale:
+            1 + (Math.random() - 0.5) * 0.05
 
     });
 
 });
 
 
-function updateProjectMotion() {
+/* =========================================================
+   WORK HEADING MOVING IMAGE
+   ========================================================= */
 
-    projectImages.forEach((image, index) => {
+const workHeading =
+    document.querySelector(".work-heading");
 
-        const rect = image.getBoundingClientRect();
+const workBackground =
+    document.querySelector(".work-background");
 
-        const viewportHeight = window.innerHeight;
+
+/* =========================================================
+   SCROLL STATE
+   ========================================================= */
+
+let scrollTicking = false;
+
+
+/*
+   Main scroll animation function.
+
+   Everything that changes while scrolling is
+   calculated here inside requestAnimationFrame.
+
+   This prevents the browser from repeatedly
+   running layout calculations directly inside
+   the scroll event.
+*/
+
+function updateScrollAnimations() {
+
+    scrollTicking = false;
+
+
+    /* -----------------------------------------------------
+       WORK HEADING IMAGE
+       ----------------------------------------------------- */
+
+    if (workHeading && workBackground) {
+
+        const rect =
+            workHeading.getBoundingClientRect();
+
+        const viewportHeight =
+            window.innerHeight;
 
 
         /*
-           Calculate where the image is
-           relative to the viewport.
+           Progress through the heading.
+
+           0 = heading entering viewport
+           1 = heading nearly passed
+        */
+
+        let progress =
+            (viewportHeight - rect.top) /
+            (viewportHeight * 0.95);
+
+
+        progress =
+            Math.max(
+                0,
+                Math.min(1, progress)
+            );
+
+
+        /*
+           Smooth ease-in/ease-out.
+        */
+
+        const eased =
+            progress *
+            progress *
+            (3 - 2 * progress);
+
+
+        /*
+           Horizontal movement.
+
+           Starts well off-screen left.
+           Finishes towards the right.
+        */
+
+        const startX =
+            -window.innerWidth * 0.75;
+
+        const endX =
+            window.innerWidth * 0.35;
+
+
+        const x =
+            startX +
+            (endX - startX) * eased;
+
+
+        /*
+           Scale.
+
+           Slightly smaller at the beginning,
+           returning to normal size.
+        */
+
+        const scale =
+            0.85 +
+            (0.15 * eased);
+
+
+        /*
+           Opacity.
+
+           Fades in gently rather than appearing
+           immediately.
+        */
+
+        let opacity;
+
+        if (progress < 0.15) {
+
+            opacity =
+                (progress / 0.15) * 0.45;
+
+        } else {
+
+            opacity = 0.45;
+
+        }
+
+
+        /*
+           Rotation.
+
+           Starts at -90 degrees
+           and rotates through to +90 degrees.
+        */
+
+        const rotation =
+            -90 + (180 * eased);
+
+
+        /*
+           Apply the complete transform.
+        */
+
+        workBackground.style.transform =
+            `translate3d(${x}px, -50%, 0)
+             scale(${scale})
+             rotate(${rotation}deg)`;
+
+        workBackground.style.opacity =
+            opacity;
+
+    }
+
+
+    /* -----------------------------------------------------
+       PROJECT IMAGE TRAVEL
+       ----------------------------------------------------- */
+
+    projectImages.forEach((image, index) => {
+
+        /*
+           Don't calculate movement for images
+           that haven't revealed yet.
+        */
+
+        if (!image.classList.contains("visible")) {
+            return;
+        }
+
+
+        const rect =
+            image.getBoundingClientRect();
+
+        const viewportHeight =
+            window.innerHeight;
+
+
+        /*
+           Calculate the image's position
+           through the viewport.
+
+           0 = entering
+           1 = leaving
         */
 
         const progress =
@@ -290,26 +372,32 @@ function updateProjectMotion() {
 
 
         /*
-           Keep movement between 0 and 1.
+           Clamp between 0 and 1.
         */
 
         const p =
-            Math.max(0, Math.min(1, progress));
+            Math.max(
+                0,
+                Math.min(1, progress)
+            );
 
 
         /*
-           Smooth easing.
+           Smooth movement.
         */
 
         const eased =
-            p * p * (3 - 2 * p);
+            p *
+            p *
+            (3 - 2 * p);
 
 
-        const motion = projectMotion[index];
+        const motion =
+            projectMotion[index];
 
 
         /*
-           Create the travelling movement.
+           Calculate movement.
         */
 
         const x =
@@ -322,54 +410,91 @@ function updateProjectMotion() {
             motion.rotate * eased;
 
         const scale =
-            1 + (motion.scale - 1) * eased;
+            1 +
+            (motion.scale - 1) * eased;
 
 
         /*
-           Only apply movement if the
-           image has already revealed.
+           Send the values to CSS.
+
+           Your existing CSS already uses these
+           variables, so no CSS changes are needed.
         */
 
-        if (image.classList.contains("visible")) {
+        image.style.setProperty(
+            "--scroll-x",
+            `${x}px`
+        );
 
-            image.style.setProperty(
-                "--scroll-x",
-                `${x}px`
-            );
+        image.style.setProperty(
+            "--scroll-y",
+            `${y}px`
+        );
 
-            image.style.setProperty(
-                "--scroll-y",
-                `${y}px`
-            );
+        image.style.setProperty(
+            "--scroll-rotate",
+            `${rotation}deg`
+        );
 
-            image.style.setProperty(
-                "--scroll-rotate",
-                `${rotation}deg`
-            );
-
-            image.style.setProperty(
-                "--scroll-scale",
-                scale
-            );
-
-        }
+        image.style.setProperty(
+            "--scroll-scale",
+            scale
+        );
 
     });
 
 }
 
 
+/* =========================================================
+   SCROLL EVENT
+   ========================================================= */
+
 window.addEventListener(
     "scroll",
-    updateProjectMotion,
-    { passive: true }
+    () => {
+
+        /*
+           Only request one animation frame at a time.
+        */
+
+        if (!scrollTicking) {
+
+            window.requestAnimationFrame(
+                updateScrollAnimations
+            );
+
+            scrollTicking = true;
+
+        }
+
+    },
+    {
+        passive: true
+    }
 );
 
+
+/* =========================================================
+   RESIZE
+   ========================================================= */
 
 window.addEventListener(
     "resize",
-    updateProjectMotion
+    () => {
+
+        /*
+           Recalculate immediately after resizing.
+        */
+
+        updateScrollAnimations();
+
+    }
 );
 
 
-updateProjectMotion();
+/* =========================================================
+   INITIAL UPDATE
+   ========================================================= */
+
+updateScrollAnimations();
