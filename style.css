@@ -887,20 +887,29 @@ footer {
 
     header img,
     .logo {
-        max-width: 150px;
+        max-width: 105px;
+        width: auto;
         height: auto;
     }
 
     /* Navigation */
     nav {
-        gap: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
         flex-wrap: wrap;
+        width: 100%;
     }
 
     nav a {
-        font-size: 13px;
-        padding: 7px 9px;
+        font-size: 11px;
+        line-height: 1.2;
+        padding: 8px 10px;
+        white-space: nowrap;
+        letter-spacing: 0.2px;
     }
+}
 
     /* Headings */
     h1 {
@@ -1032,7 +1041,7 @@ footer {
 
     header img,
     .logo {
-        max-width: 125px;
+        max-width: 90px;
     }
 
     .container,
@@ -1063,7 +1072,7 @@ footer {
     }
 
     nav a {
-        font-size: 12px;
+        font-size: 10px;
         padding: 6px 7px;
     }
 
