@@ -862,7 +862,7 @@ footer {
     body {
         width: 100%;
         max-width: 100%;
-        overflow-x: hidden;
+        overflow-x: visible;
     }
 
     /* Main page spacing */
@@ -875,8 +875,8 @@ footer {
     section {
         width: 100%;
         max-width: 100%;
-        padding-left: 18px;
-        padding-right: 18px;
+        padding-left: 0px;
+        padding-right: 0px;
         box-sizing: border-box;
     }
 
@@ -978,7 +978,7 @@ footer {
     .hero-image {
         width: 100%;
         height: auto;
-        max-height: 65vh;
+        max-height: 100vh;
         object-fit: cover;
     }
 
